@@ -1,0 +1,20 @@
+// @import '../styles/variables.scss';
+
+.letter-container {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    background-color: green;
+    // background-color: $letter;
+}
+
+.letter-content {
+    border-bottom: solid white 1px;
+    margin-bottom: 5px;    
+}
+
+.failed-letter {
+    background-color: red;
+}

@@ -1,0 +1,12 @@
+.input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.input__letter-input {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
