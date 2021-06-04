@@ -1,6 +1,6 @@
 // @import '../styles/variables.scss';
 
-.letter-container {
+.letter {
     width: 30px;
     height: 30px;
     border-radius: 5px;
@@ -10,11 +10,12 @@
     // background-color: $letter;
 }
 
-.letter-content {
+.letter__content {
+    height: 25px;
     border-bottom: solid white 1px;
     margin-bottom: 5px;    
 }
 
-.failed-letter {
+.letter__content--failed-letter {
     background-color: red;
 }

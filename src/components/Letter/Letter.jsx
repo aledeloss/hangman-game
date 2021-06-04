@@ -3,8 +3,8 @@ import "./Letter.scss";
 const Letter = ({ letter, isFailedLetter = false }) => {
 
   return (
-    <div className={`letter-container ${isFailedLetter && 'failed-letter' }`}>
-      <div className="letter-content">{letter}</div>
+    <div className={`letter ${isFailedLetter && 'letter__content--failed-letter' }`}>
+      <div className="letter__content">{letter}</div>
     </div>
   );
 };
