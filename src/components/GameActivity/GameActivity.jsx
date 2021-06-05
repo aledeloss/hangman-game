@@ -14,12 +14,19 @@ const GameActivity = () => {
     };
   });
 
-  let [word] = useState(splitWord);
+  let [word, setWord] = useState(splitWord);
+  let [failedLetters, setFailedLetters] = useState([]);
 
-
-  const checkLetter = (input, word) => {  
-    const changeLetterStatus = el => el.status = el.letter === input ? "showed" : el.status
+  const checkLetter = (input, word) => {
+    const changeLetterStatus = (el) => {
+      if (el.letter === input) {
+        let letter = (el.status = "showed");
+        setWord(() => [...word]);
+      }
+    };
     word.forEach(changeLetterStatus);
+    !word.find((el) => el.letter === input) &&
+      setFailedLetters([...failedLetters, input]);
   };
 
   const handleChange = (evt) => {
@@ -32,9 +39,13 @@ const GameActivity = () => {
 
   return (
     <div className="app__activity-container">
-      <Input handleInput={handleSubmit} handleChange={handleChange} input={input} />
-      <Word word={word} input={input}/>
-      <FailedLetters word={word} input={input} />
+      <Input
+        handleInput={handleSubmit}
+        handleChange={handleChange}
+        input={input}
+      />
+      <Word word={word} input={input} />
+      <FailedLetters word={failedLetters} input={input} />
     </div>
   );
 };

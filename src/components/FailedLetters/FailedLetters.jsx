@@ -1,23 +1,12 @@
 import Letter from "../Letter/Letter";
 import "./FailedLetters.scss";
 
-const FailedLetters = (word, input) => {
-  const letterList = ["O", "B"];
-  const checkLetter = (input, word) => {
-    const changeLetterStatus = (el) =>
-      (el.status = el.letter === input ? "showed" : el.status);
-    word.forEach(changeLetterStatus);
-  };
-  checkLetter(input, word);
+const FailedLetters = ({word}) => {
 
   const letterRender = word.map((letter) => {
       return(
-    letter.status === "hidden" && <Letter letter={letter.letter} />
+    <Letter letter={letter} isFailedLetter={true} />
   )});
-
-  // const letterRender = letterList.map(letter => {
-  //     return <Letter letter={letter} isFailedLetter={true}/>
-  // })
 
   return (
     <div className="failedLetters-container">
