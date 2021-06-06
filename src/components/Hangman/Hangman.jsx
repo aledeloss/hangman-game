@@ -1,9 +1,12 @@
 import './Hangman.scss'
 
-const Hangman = (livesLeft) => {
+const Hangman = ({lives}) => {
     return(
-        <div className="hangman-container">
-            tipito
+        <div className="hangman">
+            Vidas restantes
+            <div className="hangman__number">
+            {lives}
+            </div>
         </div>
     )
 }

@@ -1,12 +1,10 @@
 import "./App.css";
-import Hangman from "./components/Hangman/Hangman";
-import GameActivity from "./components/GameActivity/GameActivity";
+import Game from "./components/Game/Game";
 
 function App() {
   return (
     <div className="App">
-      <Hangman />
-      <GameActivity />
+      <Game />
     </div>
   );
 }

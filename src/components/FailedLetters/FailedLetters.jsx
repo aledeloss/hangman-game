@@ -9,7 +9,7 @@ const FailedLetters = ({word}) => {
   )});
 
   return (
-    <div className="failedLetters-container">
+    <div className="failedLetters">
       <div className="failedLetters__title">Failed letters</div>
       <div className="failerLetters__list">{letterRender}</div>
     </div>

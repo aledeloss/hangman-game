@@ -1,16 +1,21 @@
+import { createRef } from "react";
 import './Input.scss'
 
-const Input = ({ handleChange, handleInput }) => {
+const Input = ({ handleChange, handleInput, isActive }) => {
+
+  const inputRef = createRef();
 
     return(
-        <div className="input">
+        <div className={`input ${!isActive && 'input--ended'}`}>
+        {isActive}
             <div className="input__label">
-                Ingresá una letra
+                Please enter a letter
             </div>
-            <input type="text" className="input__letter-input" onChange={handleChange}/>
+            <input type="text" ref={inputRef} className="input__letter-input" maxlength="1" onChange={handleChange} />
             <button type="submit" className="submit-button search__button ml-1" onClick={handleInput}>
           Probar
         </button>
+        {isActive}
         </div>
     )
 }

@@ -4,10 +4,8 @@ import Letter from "../Letter/Letter";
 const Word = ({ word, input }) => {
     
   const wordRender = word.map((letter) => {
-    return <Letter letter={letter.status === "showed" ? letter.letter : ""} />;
+    return <Letter letter={letter.status === 'hit' | letter.status === 'showed' ? letter.letter : ""} />;
   });
-
-  console.log(wordRender);
 
   return <div className="word-container">{wordRender}</div>;
 };
