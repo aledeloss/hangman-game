@@ -5,10 +5,11 @@ import Hangman from '../Hangman/Hangman';
 import Input from '../Input/Input';
 import Word from '../Word/Word';
 import FailedLetters from '../FailedLetters/FailedLetters';
+import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 
 const Game = () => {
-  const [lives, setLives] = useState(2);
+  const [lives, setLives] = useState(5);
   const [isActive, setIsActive] = useState(true);
   const [input, setInput] = useState('');
   const [enteredLetters, setEnteredLetters] = useState([]);
@@ -24,8 +25,8 @@ const Game = () => {
   };
 
   // Word building
-  const originalWord = 'calamar';
-  const splitWord = originalWord.split('').map((letter) => {
+  const originalWord = 'vacunatorio';
+  const splitWord = originalWord.toUpperCase().split('').map((letter) => {
     return {
       letter: letter,
       status: 'hidden',
@@ -42,27 +43,42 @@ const Game = () => {
       if (el.letter === input) {
         el.status = 'hit';
         setWord(() => [...word]);
+        return winGame(input);
       }
     };
     word.forEach(changeLetterStatus);
     if (!word.find((el) => el.letter === input)) {
       setFailedLetters([...failedLetters, input]);
       setLives(lives - 1);
-    return endGame(lives);
+    return looseGame(lives);
     }
     console.log(input)
   };
 
-  // Lives checking
-  const endGame = () => {
+  // Game ending
+  const looseGame = () => {
     if(lives <= 1){
       setIsActive(false)
       word.map(letter => letter.status = 'showed')
       setModalContent('No lives left, you lost');
-      setShow(true);
+      return setShow(true);
     }
     console.log(lives)
   };
+  const winGame = () => {
+    if(word.every(letter => letter.status === 'hit')){
+      setIsActive(false)
+      setModalContent('You won, good work :)');
+      return setShow(true);
+    }
+    console.log(lives)
+  };
+
+  // Replay
+  const handleReplayClick = () => {
+    alert('Replay!');
+  }
+  
   // Validatations
   const isRepeated = (input) =>
     enteredLetters.find((letter) => letter === input) && true;
@@ -70,7 +86,7 @@ const Game = () => {
 
   // Events handling
   const handleChange = (evt) => {
-    setInput(evt.target.value);
+    setInput(evt.target.value.toUpperCase());
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,7 +103,7 @@ const Game = () => {
     checkLetter(input, word);
     console.log(isActive);
   };
-  console.log('ahora sí isActive', endGame);
+  console.log('ahora sí isActive', looseGame);
 
   return (
     <div className="game">
@@ -100,6 +116,7 @@ const Game = () => {
       />
       <Word word={word} input={input} isActive={false} lostGame={true} />
       <FailedLetters word={failedLetters} input={input} lostGame={true} />
+      <Button label='Replay' handleClick={handleReplayClick} />
       <Modal show={show} handleClose={hideModal} content={modalContent} />
     </div>
   );

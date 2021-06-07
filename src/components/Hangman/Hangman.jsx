@@ -3,10 +3,11 @@ import './Hangman.scss'
 const Hangman = ({lives}) => {
     return(
         <div className="hangman">
-            Vidas restantes
+            You have
             <div className="hangman__number">
             {lives}
             </div>
+            lives left
         </div>
     )
 }

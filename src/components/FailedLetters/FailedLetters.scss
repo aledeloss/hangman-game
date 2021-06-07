@@ -1,7 +1,11 @@
 .failedLetters {
+    display: flex;
     height: 50px;
+    align-items: center;
+    margin: 10px;
 }
 .failerLetters__list {
     display: flex;
     flex-direction: row;
+    margin-right: 5px;
 }
