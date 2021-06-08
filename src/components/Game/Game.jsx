@@ -7,6 +7,8 @@ import Word from '../Word/Word';
 import FailedLetters from '../FailedLetters/FailedLetters';
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
+import useSetGame from '../../hooks/useSetGame';
+import sourceTexts from '../../assets/data/sourceTexts';
 
 const Game = () => {
   const [lives, setLives] = useState(5);
@@ -24,15 +26,7 @@ const Game = () => {
     setShow(false);
   };
 
-  // Word building
-  const originalWord = 'vacunatorio';
-  const splitWord = originalWord.toUpperCase().split('').map((letter) => {
-    return {
-      letter: letter,
-      status: 'hidden',
-      index: originalWord.indexOf(letter),
-    };
-  });
+  const splitWord = useSetGame(sourceTexts);
 
   let [word, setWord] = useState(splitWord);
   let [failedLetters, setFailedLetters] = useState([]);
@@ -76,7 +70,7 @@ const Game = () => {
 
   // Replay
   const handleReplayClick = () => {
-    alert('Replay!');
+    alert('Coming soon! In the meantime, please refresh the page so you can guess a new word :)');
   }
   
   // Validatations
