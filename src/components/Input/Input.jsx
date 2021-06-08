@@ -13,7 +13,7 @@ const Input = ({ handleChange, handleInput, isActive }) => {
             </div>
             <input type="text" ref={inputRef} className="input__letter-input" maxlength="1" onChange={handleChange} />
             <button type="submit" className="submit-button search__button ml-1" onClick={handleInput}>
-          Probar
+          Try
         </button>
         {isActive}
         </div>
