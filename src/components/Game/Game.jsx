@@ -1,23 +1,24 @@
-import { useState } from 'react';
-import './Game.scss';
+import { useState } from "react";
+import "./Game.scss";
 
-import Hangman from '../Hangman/Hangman';
-import Input from '../Input/Input';
-import Word from '../Word/Word';
-import FailedLetters from '../FailedLetters/FailedLetters';
-import Button from '../Button/Button';
-import Modal from '../Modal/Modal';
-import useSetGame from '../../hooks/useSetGame';
-import sourceTexts from '../../assets/data/sourceTexts';
+import Hangman from "../Hangman/Hangman";
+import Input from "../Input/Input";
+import Word from "../Word/Word";
+import FailedLetters from "../FailedLetters/FailedLetters";
+import Button from "../Button/Button";
+import Modal from "../Modal/Modal";
+import setGame from '../../hooks/setGame';
+import sourceTexts from "../../assets/data/sourceTexts";
 
 const Game = () => {
   const [lives, setLives] = useState(5);
   const [isActive, setIsActive] = useState(true);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [enteredLetters, setEnteredLetters] = useState([]);
+  const [inputValue, setInputValue] = useState('')
 
   // Modal
-  const [modalContent, setModalContent] = useState('');
+  const [modalContent, setModalContent] = useState("");
   const [show, setShow] = useState(false);
   const showModal = () => {
     setShow(true);
@@ -26,16 +27,14 @@ const Game = () => {
     setShow(false);
   };
 
-  const splitWord = useSetGame(sourceTexts);
-
-  let [word, setWord] = useState(splitWord);
+  let [word, setWord] = useState(setGame(sourceTexts));
   let [failedLetters, setFailedLetters] = useState([]);
 
   // Input proccesing
   const checkLetter = (input, word) => {
     const changeLetterStatus = (el) => {
       if (el.letter === input) {
-        el.status = 'hit';
+        el.status = "hit";
         setWord(() => [...word]);
         return winGame(input);
       }
@@ -44,35 +43,38 @@ const Game = () => {
     if (!word.find((el) => el.letter === input)) {
       setFailedLetters([...failedLetters, input]);
       setLives(lives - 1);
-    return looseGame(lives);
+      return looseGame(lives);
     }
-    console.log(input)
+    console.log(`You entered the letter ${input}`);
   };
 
   // Game ending
   const looseGame = () => {
-    if(lives <= 1){
-      setIsActive(false)
-      word.map(letter => letter.status = 'showed')
-      setModalContent('No lives left, you lost');
+    if (lives <= 1) {
+      setIsActive(false);
+      word.map((letter) => (letter.status = "showed"));
+      setModalContent("No lives left, you lost");
       return setShow(true);
     }
-    console.log(lives)
   };
   const winGame = () => {
-    if(word.every(letter => letter.status === 'hit')){
-      setIsActive(false)
-      setModalContent('You won, good work :)');
+    if (word.every((letter) => letter.status === "hit")) {
+      setIsActive(false);
+      setModalContent("You won, good work :)");
       return setShow(true);
     }
-    console.log(lives)
   };
 
   // Replay
   const handleReplayClick = () => {
-    alert('Coming soon! In the meantime, please refresh the page so you can guess a new word :)');
-  }
-  
+    setIsActive(true);
+    setWord(setGame(sourceTexts));
+    setLives(5);
+    setFailedLetters([]);
+    setEnteredLetters([]);
+    setInputValue('');
+  };
+
   // Validatations
   const isRepeated = (input) =>
     enteredLetters.find((letter) => letter === input) && true;
@@ -82,22 +84,27 @@ const Game = () => {
   const handleChange = (evt) => {
     setInput(evt.target.value.toUpperCase());
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isRepeated(input)) {
-      setModalContent('You have already entered that letter');
+      setModalContent("You have already entered that letter");
       return showModal();
     }
     setEnteredLetters(() => [...enteredLetters, input]);
-    console.log('enteredLetters', enteredLetters);
+    console.log("enteredLetters", enteredLetters);
     if (isNotLetter(input)) {
-      setModalContent('Please enter a letter ;)');
+      setModalContent("Please enter a letter ;)");
       return showModal();
     }
     checkLetter(input, word);
     console.log(isActive);
   };
-  console.log('ahora sí isActive', looseGame);
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit(e);
+    }
+  };
 
   return (
     <div className="game">
@@ -105,12 +112,14 @@ const Game = () => {
       <Input
         handleInput={handleSubmit}
         handleChange={handleChange}
+        handleKeyPress={handleKeyPress}
+        value={inputValue}
         input={input}
         isActive={isActive}
       />
       <Word word={word} input={input} isActive={false} lostGame={true} />
       <FailedLetters word={failedLetters} input={input} lostGame={true} />
-      <Button label='Replay' handleClick={handleReplayClick} />
+      <Button label="Replay" handleClick={handleReplayClick} />
       <Modal show={show} handleClose={hideModal} content={modalContent} />
     </div>
   );

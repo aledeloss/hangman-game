@@ -1,4 +1,6 @@
-const useSetGame = (sourceText) => {
+// import { useState } from 'react';
+
+const setGame = (sourceText, lives) => {
     // Pick a word
     const allWordsArray = sourceText.split(' ');
     const onlyWordsArray = allWordsArray.filter(word => word.match(/^[a-z]+$/));
@@ -15,8 +17,7 @@ const useSetGame = (sourceText) => {
       index: playingWord.indexOf(letter),
     };
   });
-
     return splitWord;
 }
 
-export default useSetGame;
+export default setGame;
