@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./Game.scss";
 
 import Hangman from "../Hangman/Hangman";
@@ -29,6 +29,8 @@ const Game = () => {
 
   let [word, setWord] = useState(setGame(sourceTexts));
   let [failedLetters, setFailedLetters] = useState([]);
+
+  const inputRef = useRef();
 
   // Input proccesing
   const checkLetter = (input, word) => {
@@ -72,7 +74,8 @@ const Game = () => {
     setLives(5);
     setFailedLetters([]);
     setEnteredLetters([]);
-    setInputValue('');
+    setInput('');
+    inputRef.current.focus();
   };
 
   // Validatations
@@ -98,11 +101,15 @@ const Game = () => {
       return showModal();
     }
     checkLetter(input, word);
+    setInput('');
+    inputRef.current.focus();    
     console.log(isActive);
   };
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && show===false) {
       handleSubmit(e);
+    } else {
+      setShow(false)
     }
   };
 
@@ -113,7 +120,7 @@ const Game = () => {
         handleInput={handleSubmit}
         handleChange={handleChange}
         handleKeyPress={handleKeyPress}
-        value={inputValue}
+        inputRef={inputRef}
         input={input}
         isActive={isActive}
       />
