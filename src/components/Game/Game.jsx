@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./Game.scss";
 
 import Hangman from "../Hangman/Hangman";
@@ -7,7 +7,7 @@ import Word from "../Word/Word";
 import FailedLetters from "../FailedLetters/FailedLetters";
 import Button from "../Button/Button";
 import Modal from "../Modal/Modal";
-import setGame from '../../hooks/setGame';
+import setGame from "../../hooks/setGame";
 import sourceTexts from "../../assets/data/sourceTexts";
 
 const Game = () => {
@@ -15,7 +15,6 @@ const Game = () => {
   const [isActive, setIsActive] = useState(true);
   const [input, setInput] = useState("");
   const [enteredLetters, setEnteredLetters] = useState([]);
-  const [inputValue, setInputValue] = useState('')
 
   // Modal
   const [modalContent, setModalContent] = useState("");
@@ -30,7 +29,8 @@ const Game = () => {
   let [word, setWord] = useState(setGame(sourceTexts));
   let [failedLetters, setFailedLetters] = useState([]);
 
-  const inputRef = useRef();
+  const inputRef = useRef(null);
+  const replayRef = useRef(null);
 
   // Input proccesing
   const checkLetter = (input, word) => {
@@ -74,7 +74,7 @@ const Game = () => {
     setLives(5);
     setFailedLetters([]);
     setEnteredLetters([]);
-    setInput('');
+    setInput("");
     inputRef.current.focus();
   };
 
@@ -101,18 +101,21 @@ const Game = () => {
       return showModal();
     }
     checkLetter(input, word);
-    setInput('');
-    inputRef.current.focus();    
+    setInput("");
+    inputRef.current.focus();
     console.log(isActive);
   };
   const handleKeyPress = (e) => {
-    if (e.key === "Enter" && show===false) {
+    if (e.key === "Enter" && show === false) {
       handleSubmit(e);
     } else {
-      setShow(false)
+      setShow(false);
     }
   };
-
+  useEffect(() => {
+    inputRef.current.focus()
+  });
+  console.log(Button)
   return (
     <div className="game">
       <Hangman lives={lives} />
@@ -125,8 +128,10 @@ const Game = () => {
         isActive={isActive}
       />
       <Word word={word} input={input} isActive={false} lostGame={true} />
-      <FailedLetters word={failedLetters} input={input} lostGame={true} />
-      <Button label="Replay" handleClick={handleReplayClick} />
+      {failedLetters[0] && (
+        <FailedLetters word={failedLetters} input={input} lostGame={true} />
+      )}
+      <Button label="Replay" buttonRef={replayRef} handleClick={handleReplayClick} />
       <Modal show={show} handleClose={hideModal} content={modalContent} />
     </div>
   );
