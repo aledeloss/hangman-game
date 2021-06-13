@@ -1,4 +1,4 @@
-Simple Hangman for JS/React practicing and fun
+Simple Hangman for JS/React practicing and fun. You can play with the demo [here](https://hangman-game-mq6aki1t1-aledeloss.vercel.app/): 
 
 TODOS:
 
