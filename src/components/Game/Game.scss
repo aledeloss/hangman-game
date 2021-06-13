@@ -4,7 +4,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow-x: scroll;
 }
 
 .game__container {
@@ -14,12 +13,6 @@
   width: 100vw;
   padding: 5px;
   justify-content: space-around;
-}
-
-@media (min-width: 600px) {
-  .game__container {
-    width: 100vw;
-  }
 }
 
 @media (min-width: 800px) {
