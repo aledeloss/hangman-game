@@ -10,16 +10,26 @@
   .modal__main {
     position:fixed;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
-    background: rgb(245, 231, 168);
+    background: rgb(247, 228, 144);
     width: 50%;
-    height: auto;
-    padding: 10px;
+    min-height: 100px;
     border-radius: 10px;
     top:50%;
     left:50%;
     transform: translate(-50%,-50%);
     color: rgba(0, 0, 0, 0.6);
+  }
+
+  .modal__button {
+    position: fixed;
+    bottom: 10px;
+    width: 150px;
+    padding: 5px;
+    height: auto;
+    border-radius: 10px;
   }
   
   .modal--display-block {

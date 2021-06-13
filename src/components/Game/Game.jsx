@@ -113,25 +113,36 @@ const Game = () => {
     }
   };
   useEffect(() => {
-    inputRef.current.focus()
+    inputRef.current.focus();
   });
-  console.log(Button)
+  console.log(Button);
   return (
     <div className="game">
-      <Hangman lives={lives} />
-      <Input
-        handleInput={handleSubmit}
-        handleChange={handleChange}
-        handleKeyPress={handleKeyPress}
-        inputRef={inputRef}
-        input={input}
-        isActive={isActive}
+      <Button
+        className="replayButton"
+        label="Replay"
+        buttonRef={replayRef}
+        handleClick={handleReplayClick}
       />
-      <Word word={word} input={input} isActive={false} lostGame={true} />
-      {failedLetters[0] && (
-        <FailedLetters word={failedLetters} input={input} lostGame={true} />
-      )}
-      <Button label="Replay" buttonRef={replayRef} handleClick={handleReplayClick} />
+      <div className="game__container">
+        <Hangman lives={lives} />
+        <div className="game__activity">
+          <Input
+            handleInput={handleSubmit}
+            handleChange={handleChange}
+            handleKeyPress={handleKeyPress}
+            inputRef={inputRef}
+            input={input}
+            isActive={isActive}
+          />
+          <Word word={word} input={input} isActive={false} lostGame={true} />
+          <FailedLetters
+            failedLetters={failedLetters}
+            input={input}
+            lostGame={true}
+          />
+        </div>
+      </div>
       <Modal show={show} handleClose={hideModal} content={modalContent} />
     </div>
   );

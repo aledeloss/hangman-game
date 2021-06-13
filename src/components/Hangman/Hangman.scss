@@ -1,9 +1,10 @@
 .hangman{
     border-radius: 100%;
-    background-color: blue;
-    height: 300px;
-    width: 300px;
-    padding: 10px;
+    height: 150px;
+    min-width: 150px;
+    background-color: #D8D8F6;
+    color: #203a43;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,5 +13,5 @@
 }
 
 .hangman__number {
-    font-size: 200px;
+    font-size: 100px;
 }

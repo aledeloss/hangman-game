@@ -4,8 +4,13 @@
     align-items: center;
     margin: 10px;
 }
+
 .failerLetters__list {
     display: flex;
     flex-direction: row;
     margin-right: 5px;
+}
+
+.failedLetters--hidden {
+    visibility: hidden;
 }

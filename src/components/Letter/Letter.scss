@@ -5,17 +5,18 @@
     height: 30px;
     border-radius: 5px;
     padding: 5px;
+    padding-top: 8px;
     margin: 5px;
-    background-color: green;
-    // background-color: $letter;
+    color: #203a43;
+    background-color: rgb(45, 230, 45);
 }
 
 .letter__content {
     height: 25px;
-    border-bottom: solid white 1px;
+    border-bottom: solid #203a43 1px;
     margin-bottom: 5px;    
 }
 
 .letter__content--failed-letter {
-    background-color: red;
+    background-color: rgb(247, 188, 188);
 }

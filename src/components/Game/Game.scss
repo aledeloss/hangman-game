@@ -3,4 +3,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-x: scroll;
+}
+
+.game__container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 80vw;
+    justify-content: space-around;
 }
