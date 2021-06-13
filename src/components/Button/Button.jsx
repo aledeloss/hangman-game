@@ -1,7 +1,7 @@
 import React from "react";
 import "./Button.scss";
 
-const Button = ({ label, handleClick, buttonRef }) => {
+const Button = ({ label, handleClick, buttonRef, replay = false }) => {
 
   const handleKeyPress = (e) => {
     if(e.key === 'Enter'){
@@ -9,7 +9,7 @@ const Button = ({ label, handleClick, buttonRef }) => {
     }
   };
   return (
-    <button className="button" ref={buttonRef} onClick={handleClick} onKeyPress={handleKeyPress}>
+    <button className={`button ${replay && 'replay'}`} ref={buttonRef} onClick={handleClick} onKeyPress={handleKeyPress}>
       {label}
     </button>
   );

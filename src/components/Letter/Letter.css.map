@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,OAAO,CAAC;EACJ,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;EACZ,aAAa,EAAE,GAAG;EAClB,OAAO,EAAE,GAAG;EACZ,WAAW,EAAE,GAAG;EAChB,MAAM,EAAE,GAAG;EACX,KAAK,EAAE,OAAO;EACd,gBAAgB,ECNJ,OAAgB;CDO/B;;AAED,AAAA,gBAAgB,CAAC;EACb,MAAM,EAAE,IAAI;EACZ,aAAa,EAAE,KAAK,CCdb,OAAO,CDciB,GAAG;EAClC,aAAa,EAAE,GAAG;CACrB;;AAED,AAAA,+BAA+B,CAAC;EAC5B,gBAAgB,ECjBN,OAAkB;CDkB/B",
+    "sources": [
+        "Letter.scss",
+        "../../assets/styles/_mainStyles.scss"
+    ],
+    "names": [],
+    "file": "Letter.css"
+}

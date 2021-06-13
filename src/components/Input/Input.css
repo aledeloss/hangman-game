@@ -1,0 +1,30 @@
+.input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 70px;
+  border-radius: 3px;
+  color: #D8D8F6;
+}
+
+.input__letter-input {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 15px;
+  font-size: 20px;
+  float: none;
+}
+
+.input--ended {
+  visibility: hidden;
+}
+/*# sourceMappingURL=Input.css.map */

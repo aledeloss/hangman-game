@@ -1,0 +1,21 @@
+.letter {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  padding: 5px;
+  padding-top: 8px;
+  margin: 5px;
+  color: #203a43;
+  background-color: #2de62d;
+}
+
+.letter__content {
+  height: 25px;
+  border-bottom: solid #203a43 1px;
+  margin-bottom: 5px;
+}
+
+.letter__content--failed-letter {
+  background-color: #f7bcbc;
+}
+/*# sourceMappingURL=Letter.css.map */

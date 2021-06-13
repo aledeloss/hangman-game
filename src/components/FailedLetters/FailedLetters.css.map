@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,cAAc,CAAC;EACX,OAAO,EAAE,IAAI;EACb,MAAM,EAAE,IAAI;EACZ,WAAW,EAAE,MAAM;EACnB,MAAM,EAAE,IAAI;CACf;;AAED,AAAA,oBAAoB,CAAC;EACjB,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,GAAG;EACnB,YAAY,EAAE,GAAG;CACpB;;AAED,AAAA,sBAAsB,CAAC;EACnB,UAAU,EAAE,MAAM;CACrB",
+    "sources": [
+        "FailedLetters.scss"
+    ],
+    "names": [],
+    "file": "FailedLetters.css"
+}

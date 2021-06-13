@@ -1,0 +1,27 @@
+.hangman {
+  border-radius: 100%;
+  height: 150px;
+  min-width: 150px;
+  background-color: #D8D8F6;
+  color: #203a43;
+  padding: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 10px;
+}
+
+.hangman__number {
+  font-size: 100px;
+}
+/*# sourceMappingURL=Hangman.css.map */

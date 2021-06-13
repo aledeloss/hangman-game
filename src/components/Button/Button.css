@@ -1,0 +1,36 @@
+.button {
+  background-color: #f7bcbc;
+  width: 60px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+}
+
+.button:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.replay {
+  background-color: pink;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  justify-self: flex-end;
+  margin: 20px;
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 600;
+}
+/*# sourceMappingURL=Button.css.map */

@@ -1,4 +1,5 @@
 import './Modal.scss';
+import Button from '../Button/Button';
 
 const Modal = ({ handleClose, show, content }) => {
   const showHideClassName = show ? "modal modal--display-block" : "modal modal--display-none";
@@ -6,10 +7,10 @@ const Modal = ({ handleClose, show, content }) => {
   return (
     <div className={showHideClassName}>
       <section className="modal__main">
+        <div className="modal__content">
         {content}
-        <button className="modal__button" type="button" onClick={handleClose}>
-          Close
-        </button>
+        </div>
+        <Button label='Close' handleClick={handleClose} />
       </section>
     </div>
   );

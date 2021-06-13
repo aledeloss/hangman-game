@@ -55,7 +55,7 @@ const Game = () => {
     if (lives <= 1) {
       setIsActive(false);
       word.map((letter) => (letter.status = "showed"));
-      setModalContent("No lives left, you lost");
+      setModalContent("No lives left, you lost :(");
       return setShow(true);
     }
   };
@@ -123,6 +123,7 @@ const Game = () => {
         label="Replay"
         buttonRef={replayRef}
         handleClick={handleReplayClick}
+        replay={true}
       />
       <div className="game__container">
         <Hangman lives={lives} />

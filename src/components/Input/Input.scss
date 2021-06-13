@@ -1,9 +1,12 @@
+@import '../../assets/styles/mainStyles';
+
 .input {
     display: flex;
     flex-direction: row;
     align-items: center;
     height: 70px;
     border-radius: 3px;
+    color: $veryLightGrey;
 }
 .input__letter-input {
     width: 30px;

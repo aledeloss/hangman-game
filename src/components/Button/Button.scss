@@ -1,15 +1,29 @@
+@import "../../assets/styles/mainStyles";
+
 .button {
-    background-color: pink;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-self: flex-end;
-    justify-self: flex-end;
-    margin: 20px;
-    width: 60px;
-    height: 60px;
-    border: none;
-    border-radius: 50%;
-    font-size: 14px;
-    font-weight: 600;
+  background-color: $buttonColor;
+  width: 60px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}
+
+.replay {
+  background-color: pink;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-end;
+  justify-self: flex-end;
+  margin: 20px;
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 600;
 }
