@@ -9,7 +9,16 @@
 .game__container {
     display: flex;
     align-items: center;
-    flex-direction: row;
-    width: 80vw;
+    flex-direction: column;
+    width: 100vw;
     justify-content: space-around;
 }
+
+
+@media (min-width: 800px) {
+    .game__container {
+    width: 80vw;
+      flex-direction: row;
+    }
+}
+  
