@@ -18,7 +18,7 @@ const Input = ({
         ref={inputRef}
         value={input}
         className="input__letter-input"
-        maxlength="1"
+        maxLength="1"
         onChange={handleChange}
         onKeyPress={handleKeyPress}
       />

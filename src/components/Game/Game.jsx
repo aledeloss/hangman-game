@@ -9,12 +9,14 @@ import Button from "../Button/Button";
 import Modal from "../Modal/Modal";
 import setGame from "../../hooks/setGame";
 import sourceTexts from "../../assets/data/sourceTexts";
+import getDefinition from "../../services/getDefinition";
 
 const Game = () => {
   const [lives, setLives] = useState(5);
   const [isActive, setIsActive] = useState(true);
   const [input, setInput] = useState("");
   const [enteredLetters, setEnteredLetters] = useState([]);
+  const [definition, setDefinition] = useState([]);
 
   // Modal
   const [modalContent, setModalContent] = useState("");
@@ -26,8 +28,21 @@ const Game = () => {
     setShow(false);
   };
 
-  let [word, setWord] = useState(setGame(sourceTexts));
+  const { splitWord, playingWord } = setGame(sourceTexts);
+  console.log("PLAYING WORD IS", playingWord);
+  let [word, setWord] = useState(splitWord);
   let [failedLetters, setFailedLetters] = useState([]);
+
+  useEffect(() => {
+    const language = "en_US";
+    fetch(`https://api.dictionaryapi.dev/api/v2/entries/${language}/${playingWord}`)
+    .then(response => response.json())
+    .then(response => {
+      console.log('definition:', response)
+      setDefinition(() => response[0].meanings[0].definitions[0].definition)
+    })
+  },[word]);
+
 
   const inputRef = useRef(null);
   const replayRef = useRef(null);
@@ -47,7 +62,6 @@ const Game = () => {
       setLives(lives - 1);
       return looseGame(lives);
     }
-    console.log(`You entered the letter ${input}`);
   };
 
   // Game ending
@@ -70,12 +84,18 @@ const Game = () => {
   // Replay
   const handleReplayClick = () => {
     setIsActive(true);
-    setWord(setGame(sourceTexts));
+    const { splitWord, playingWord } = setGame(sourceTexts);
+    setWord(splitWord);
     setLives(5);
     setFailedLetters([]);
     setEnteredLetters([]);
     setInput("");
     inputRef.current.focus();
+  };
+  // Hint
+  const handleHintClick = () => {
+    setModalContent(definition);
+    return showModal();
   };
 
   // Validatations
@@ -95,7 +115,6 @@ const Game = () => {
       return showModal();
     }
     setEnteredLetters(() => [...enteredLetters, input]);
-    console.log("enteredLetters", enteredLetters);
     if (isNotLetter(input)) {
       setModalContent("Please enter a letter ;)");
       return showModal();
@@ -115,9 +134,31 @@ const Game = () => {
   useEffect(() => {
     inputRef.current.focus();
   });
-  console.log(Button);
+
+  // const language = "en_US";
+
+  // useEffect(() => {
+  //   fetch(
+  //     `https://api.dictionaryapi.dev/api/v2/entries/${language}/${playingWord}`,
+  //     {
+  //       method: "GET",
+  //     }
+  //   )
+  //     .then((response) => response.json())
+  //     .then(response => {
+  //       const {data = []} = response})
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // },[]);
+
   return (
     <div className="game">
+      <Button
+        className="seeDefinitionButton"
+        label="Hint"
+        handleClick={handleHintClick}
+      />
       <Button
         className="replayButton"
         label="Replay"
@@ -142,6 +183,7 @@ const Game = () => {
             input={input}
             lostGame={true}
           />
+          {/* {definition[0].word} */}
         </div>
       </div>
       <Modal show={show} handleClose={hideModal} content={modalContent} />

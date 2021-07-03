@@ -7,7 +7,6 @@ const setGame = (sourceText, lives) => {
     const longWordsArray = onlyWordsArray.filter(word => word.length > 4);
     const randomIndex = Math.floor(Math.random() * longWordsArray.length);
     const playingWord = longWordsArray[randomIndex]
-    console.log(`The word is ${playingWord}`);
 
   // Split word building
   const splitWord = playingWord.toUpperCase().split('').map((letter) => {
@@ -17,7 +16,7 @@ const setGame = (sourceText, lives) => {
       index: playingWord.indexOf(letter),
     };
   });
-    return splitWord;
+    return { splitWord, playingWord};
 }
 
 export default setGame;
