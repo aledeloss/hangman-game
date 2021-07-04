@@ -60,18 +60,18 @@ const Game = () => {
     if (!word.find((el) => el.letter === input)) {
       setFailedLetters([...failedLetters, input]);
       setLives(lives - 1);
-      return looseGame(lives);
+      if (lives <= 1) {
+        looseGame(lives);
+      }
     }
   };
 
   // Game ending
   const looseGame = () => {
-    if (lives <= 1) {
       setIsActive(false);
       word.map((letter) => (letter.status = "showed"));
       setModalContent("No lives left, you lost :(");
       return setShow(true);
-    }
   };
   const winGame = () => {
     if (word.every((letter) => letter.status === "hit")) {
@@ -186,7 +186,7 @@ const Game = () => {
           {/* {definition[0].word} */}
         </div>
       </div>
-      <Modal show={show} handleClose={hideModal} content={modalContent} />
+      <Modal show={show} handleClose={hideModal} content={modalContent} handleKeyPress={handleKeyPress}/>
     </div>
   );
 };
