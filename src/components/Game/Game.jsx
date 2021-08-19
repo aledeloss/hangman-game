@@ -16,19 +16,14 @@ const Game = () => {
   const [input, setInput] = useState("");
   const [enteredLetters, setEnteredLetters] = useState([]);
   const [definition, setDefinition] = useState([]);
-
-  // Modal
   const [modalContent, setModalContent] = useState("");
-  const [show, setShow] = useState(false);
-  const showModal = () => {
-    setShow(true);
-  };
+  const [showModal, setShowModal] = useState(false);
+
   const hideModal = () => {
-    setShow(false);
+    setShowModal(false);
   };
 
   const { splitWord, playingWord } = setGame(sourceTexts);
-  console.log("PLAYING WORD IS", playingWord);
 
   const [word, setWord] = useState(splitWord);
   const [failedLetters, setFailedLetters] = useState([]);
@@ -73,12 +68,12 @@ const Game = () => {
   const looseGame = () => {
     word.map((letter) => (letter.status = "showed"));
     setModalContent("No lives left, you lost :(");
-    return setShow(true);
+    return setShowModal(true);
   };
   const winGame = () => {
     if (word.every((letter) => letter.status === "hit")) {
       setModalContent("You won, good work :)");
-      return setShow(true);
+      return setShowModal(true);
     }
   };
 
@@ -95,7 +90,7 @@ const Game = () => {
   // Hint
   const handleHintClick = () => {
     setModalContent(definition);
-    return showModal();
+    return setShowModal(true);
   };
 
   // Validations
@@ -112,22 +107,22 @@ const Game = () => {
     e.preventDefault();
     if (isRepeated(input)) {
       setModalContent("You have already entered that letter");
-      return showModal();
+      return setShowModal(true);
     }
     setEnteredLetters(() => [...enteredLetters, input]);
     if (isNotLetter(input)) {
       setModalContent("Please enter a letter ;)");
-      return showModal();
+      return setShowModal(true);
     }
     checkLetter(input, word);
     setInput("");
     inputRef.current.focus();
   };
   const handleKeyPress = (e) => {
-    if (e.key === "Enter" && show === false) {
+    if (e.key === "Enter" && showModal === false) {
       handleSubmit(e);
     } else {
-      setShow(false);
+      setShowModal(false);
     }
   };
   useEffect(() => {
@@ -169,7 +164,7 @@ const Game = () => {
         </div>
       </div>
       <Modal
-        show={show}
+        show={showModal}
         handleClose={hideModal}
         content={modalContent}
         handleKeyPress={handleKeyPress}
