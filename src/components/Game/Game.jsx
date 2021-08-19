@@ -9,11 +9,10 @@ import Button from "../Button/Button";
 import Modal from "../Modal/Modal";
 import setGame from "../../hooks/setGame";
 import sourceTexts from "../../assets/data/sourceTexts";
-import getDefinition from "../../services/getDefinition";
+// import getDefinition from "../../services/getDefinition";
 
 const Game = () => {
   const [lives, setLives] = useState(5);
-  const [isActive, setIsActive] = useState(true);
   const [input, setInput] = useState("");
   const [enteredLetters, setEnteredLetters] = useState([]);
   const [definition, setDefinition] = useState([]);
@@ -30,19 +29,23 @@ const Game = () => {
 
   const { splitWord, playingWord } = setGame(sourceTexts);
   console.log("PLAYING WORD IS", playingWord);
-  let [word, setWord] = useState(splitWord);
-  let [failedLetters, setFailedLetters] = useState([]);
+
+  const [word, setWord] = useState(splitWord);
+  const [failedLetters, setFailedLetters] = useState([]);
+
+  const isActive = lives > 0 || word.every((letter) => letter.status === "hit");
 
   useEffect(() => {
     const language = "en_US";
-    fetch(`https://api.dictionaryapi.dev/api/v2/entries/${language}/${playingWord}`)
-    .then(response => response.json())
-    .then(response => {
-      console.log('definition:', response)
-      setDefinition(() => response[0].meanings[0].definitions[0].definition)
-    })
-  },[word]);
-
+    fetch(
+      `https://api.dictionaryapi.dev/api/v2/entries/${language}/${playingWord}`
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("definition:", response);
+        setDefinition(() => response[0].meanings[0].definitions[0].definition);
+      });
+  }, [word]);
 
   const inputRef = useRef(null);
   const replayRef = useRef(null);
@@ -68,14 +71,12 @@ const Game = () => {
 
   // Game ending
   const looseGame = () => {
-      setIsActive(false);
-      word.map((letter) => (letter.status = "showed"));
-      setModalContent("No lives left, you lost :(");
-      return setShow(true);
+    word.map((letter) => (letter.status = "showed"));
+    setModalContent("No lives left, you lost :(");
+    return setShow(true);
   };
   const winGame = () => {
     if (word.every((letter) => letter.status === "hit")) {
-      setIsActive(false);
       setModalContent("You won, good work :)");
       return setShow(true);
     }
@@ -83,7 +84,6 @@ const Game = () => {
 
   // Replay
   const handleReplayClick = () => {
-    setIsActive(true);
     const { splitWord, playingWord } = setGame(sourceTexts);
     setWord(splitWord);
     setLives(5);
@@ -98,7 +98,7 @@ const Game = () => {
     return showModal();
   };
 
-  // Validatations
+  // Validations
   const isRepeated = (input) =>
     enteredLetters.find((letter) => letter === input) && true;
   const isNotLetter = (input) => !input.match(/[a-z]/i) && true;
@@ -122,7 +122,6 @@ const Game = () => {
     checkLetter(input, word);
     setInput("");
     inputRef.current.focus();
-    console.log(isActive);
   };
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && show === false) {
@@ -134,23 +133,6 @@ const Game = () => {
   useEffect(() => {
     inputRef.current.focus();
   });
-
-  // const language = "en_US";
-
-  // useEffect(() => {
-  //   fetch(
-  //     `https://api.dictionaryapi.dev/api/v2/entries/${language}/${playingWord}`,
-  //     {
-  //       method: "GET",
-  //     }
-  //   )
-  //     .then((response) => response.json())
-  //     .then(response => {
-  //       const {data = []} = response})
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // },[]);
 
   return (
     <div className="game">
@@ -186,7 +168,12 @@ const Game = () => {
           {/* {definition[0].word} */}
         </div>
       </div>
-      <Modal show={show} handleClose={hideModal} content={modalContent} handleKeyPress={handleKeyPress}/>
+      <Modal
+        show={show}
+        handleClose={hideModal}
+        content={modalContent}
+        handleKeyPress={handleKeyPress}
+      />
     </div>
   );
 };
