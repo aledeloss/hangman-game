@@ -10,17 +10,11 @@ import Modal from "../Modal/Modal";
 import setGame from "../../hooks/setGame";
 import sourceTexts from "../../assets/data/sourceTexts";
 import getDefinition from "../../services/getDefinition";
+import { GameDomain } from "../../domain/game";
+import { getHint } from "../../data/hint";
 
-const Game = () => {
-  const [lives, setLives] = useState(5);
-  const [isActive, setIsActive] = useState(true);
-  const [input, setInput] = useState("");
-  const [enteredLetters, setEnteredLetters] = useState([]);
-  const [definition, setDefinition] = useState([]);
-
-  // Modal
-  const [modalContent, setModalContent] = useState("");
-  const [show, setShow] = useState(false);
+const useModal = (initialShow) => {
+  const [show, setShow] = useState(initialShow);
   const showModal = () => {
     setShow(true);
   };
@@ -28,58 +22,55 @@ const Game = () => {
     setShow(false);
   };
 
+  return { show, showModal, hideModal }
+}
+
+const useHint = (word) => {
+  const [hint, setHint] = useState("")
+  
+  useEffect(() => {
+    getHint(word).then((hint) => {
+      setHint(hint)
+    })
+  }, [word])
+
+  return hint
+}
+
+const Game = () => {
+  const [lives, setLives] = useState(GameDomain.lives);
+  const [isActive, setIsActive] = useState(true);
+  const [input, setInput] = useState("");
+  const [enteredLetters, setEnteredLetters] = useState([]);
+
+  // Modal
+  const [modalContent, setModalContent] = useState("");
+  const { show, showModal, hideModal } = useModal(false)
+
   const { splitWord, playingWord } = setGame(sourceTexts);
   console.log("PLAYING WORD IS", playingWord);
   let [word, setWord] = useState(splitWord);
   let [failedLetters, setFailedLetters] = useState([]);
 
-  useEffect(() => {
-    const language = "en_US";
-    fetch(`https://api.dictionaryapi.dev/api/v2/entries/${language}/${playingWord}`)
-    .then(response => response.json())
-    .then(response => {
-      console.log('definition:', response)
-      setDefinition(() => response[0].meanings[0].definitions[0].definition)
-    })
-  },[word]);
-
+  const definition = useHint(playingWord)
 
   const inputRef = useRef(null);
   const replayRef = useRef(null);
 
-  // Input proccesing
-  const checkLetter = (input, word) => {
-    const changeLetterStatus = (el) => {
-      if (el.letter === input) {
-        el.status = "hit";
-        setWord(() => [...word]);
-        return winGame(input);
-      }
-    };
-    word.forEach(changeLetterStatus);
-    if (!word.find((el) => el.letter === input)) {
-      setFailedLetters([...failedLetters, input]);
-      setLives(lives - 1);
-      return looseGame(lives);
-    }
-  };
-
-  // Game ending
   const looseGame = () => {
     if (lives <= 1) {
-      setIsActive(false);
-      word.map((letter) => (letter.status = "showed"));
-      setModalContent("No lives left, you lost :(");
-      return setShow(true);
+        setIsActive(false);
+        word.map((letter) => (letter.status = "showed"));
+        setModalContent("No lives left, you lost :(");
+        setShow(true);
     }
-  };
-  const winGame = () => {
-    if (word.every((letter) => letter.status === "hit")) {
+  }
+
+    const winGame = () => {
       setIsActive(false);
       setModalContent("You won, good work :)");
-      return setShow(true);
+      setShow(true);
     }
-  };
 
   // Replay
   const handleReplayClick = () => {
@@ -119,11 +110,19 @@ const Game = () => {
       setModalContent("Please enter a letter ;)");
       return showModal();
     }
-    checkLetter(input, word);
+
+    const hasWon = GameDomain.checkLetter(input, word);
+    if (hasWon) {
+      winGame()
+    } else {
+      looseGame()
+    }
+
     setInput("");
     inputRef.current.focus();
     console.log(isActive);
   };
+
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && show === false) {
       handleSubmit(e);
